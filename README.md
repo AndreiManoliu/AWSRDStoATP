@@ -19,46 +19,46 @@ Here are the details for each step:
 ### 5.	Datapump export in AWS RDS
 Connect using SQL Developer
 
-![First Pic](Images/Pic01.png)
+![First Pic](images/Pic01.png)
 
 Run a simple query statement to select a table in the DCA schema that we are going to migrate.
 ```
 Select * from dca.dca_sales_data;
 ```
 
-![Pic02](Images/Pic02.png)
+![Pic02](images/Pic02.png)
 
 Add the connection to DBA Tab
 
-![Pic03](Images/Pic03.png)
+![Pic03](images/Pic03.png)
 
 Select the connection and click OK
 
-![Pic04](Images/Pic04.png)
+![Pic04](images/Pic04.png)
 
 In the DBA tab select the AWS connection, expand Data Pump and right click on Export Jobs. Chose Data Pump Export Wizard.
 
-![Pic05](Images/Pic05.png)
+![Pic05](images/Pic05.png)
 
 The Export wizard is launched. Chose Schemas export. And click Next.
 
-![Pic06](Images/Pic06.png)
+![Pic06](images/Pic06.png)
 
 Chose the schema to be exported, in this case DCA. Click Next.
 
-![Pic07](Images/Pic07.png)
+![Pic07](images/Pic07.png)
 
 Click Next.
 
-![Pic08](Images/Pic08.png)
+![Pic08](images/Pic08.png)
 
 Click Next.
 
-![Pic09](Images/Pic09.png)
+![Pic09](images/Pic09.png)
 
 Click Next.
 
-![Pic10](Images/Pic10.png)
+![Pic10](images/Pic10.png)
 
 On the Output Files step you can limit the file size to 5000M to be able to easier move the files.
 - Uncheck the Append timestamp to Dump, Log and Job Names.
@@ -66,23 +66,23 @@ On the Output Files step you can limit the file size to 5000M to be able to easi
 
 Click Next.
 
-![Pic11](Images/Pic11.png)
+![Pic11](images/Pic11.png)
 
 Click Next.
 
-![Pic12](Images/Pic12.png)
+![Pic12](images/Pic12.png)
 
 Click Finish.
 
-![Pic13](Images/Pic13.png)
+![Pic13](images/Pic13.png)
 
 Notice the Job appears in the page and the state is Executing.
 
-![Pic14](Images/Pic14.png)
+![Pic14](images/Pic14.png)
 
 When the job ends the state changes to NOT RUNNING.
 
-![Pic15](Images/Pic15.png)
+![Pic15](images/Pic15.png)
 
 
 
@@ -101,7 +101,7 @@ SELECT rdsadmin.rdsadmin_s3_tasks.upload_to_s3(
    AS TASK_ID FROM DUAL;   
 ```
 
-![Pic16](Images/Pic16.png)
+![Pic16](images/Pic16.png)
 
 The result would be a task id like this: ```1588173984661-23```
 To check the log for the task id, run the query:
@@ -110,16 +110,16 @@ To check the log for the task id, run the query:
 SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('BDUMP','dbtask-1588173984661-23.log')); 
 ```    
 \
-![Pic17](Images/Pic17.png)
+![Pic17](images/Pic17.png)
 \
 [S3 security guidelines and documentation](https://docs.aws.amazon.com/AmazonS3/latest/dev/access-control-block-public-access.html)  
 When the upload is completed you can see the files in the bucket.
 \
-![Pic18](Images/Pic18.png)
+![Pic18](images/Pic18.png)
 \
 Click on the dump file.
 
-![Pic19](Images/Pic19.png)
+![Pic19](images/Pic19.png)
 
 Note down the object URL because we are going to use it later.
 
@@ -127,7 +127,7 @@ Note down the object URL because we are going to use it later.
 
 Connect with SQL Developer 
 
-![Pic20](Images/Pic20.png)
+![Pic20](images/Pic20.png)
 
 Get the AWS credentials like this:
 - Sign in to the AWS Management Console and open the IAM console at https://console.aws.amazon.com/iam/.
@@ -154,50 +154,50 @@ END;
 
 In the DBA tab select the ATP connection, expand Data Pump and right click on Import Jobs. Chose Data Pump Import Wizard.
 
-![Pic21](Images/Pic21.png)
+![Pic21](images/Pic21.png)
 
 In the first step chose Schemas to import.
 In the **Credentials or Directories** section, choose the Credentials created above: **AWS_CRED_NAME**.
 
-![Pic22](Images/Pic22.png)
+![Pic22](images/Pic22.png)
 
 In the **File Names or URI** section, enter the object URL noted down at the end of step 6.\
 Click Next.
 
-![Pic23](Images/Pic23.png)
+![Pic23](images/Pic23.png)
 
 Wait a bit until the schema appears in the list. Chose the schema name and move it to the right panel.\
 Click Next.
 
-![Pic24](Images/Pic24.png)
+![Pic24](images/Pic24.png)
 
 Click Next.
 
-![Pic25](Images/Pic25.png)
+![Pic25](images/Pic25.png)
 
 Click Next.
 
-![Pic26](Images/Pic26.png)
+![Pic26](images/Pic26.png)
 
 Click Next.
 
-![Pic27](Images/Pic27.png)
+![Pic27](images/Pic27.png)
 
 Click Finish.
 
-![Pic28](Images/Pic28.png)
+![Pic28](images/Pic28.png)
 
 The job appears in the window with the EXECUTING state.
 
-![Pic29](Images/Pic29.png)
+![Pic29](images/Pic29.png)
 
 When the Job is finished the state changes to NOT RUNNING
 
-![Pic30](Images/Pic30.png)
+![Pic30](images/Pic30.png)
 
 We can see the data was imported and run the same SQL statement from the beginning.
 ```
 select * from dca.dca_sales_data;
 ```
 
-![Pic31](Images/Pic31.png)
+![Pic31](images/Pic31.png)
