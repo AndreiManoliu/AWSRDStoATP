@@ -93,12 +93,14 @@ When the job ends the state changes to NOT RUNNING.
 To copy the dumpfile from the internal DATA_PUMP_DIR to the S3 bucket, run the following SQL.
 
 ```
+<copy>
 SELECT rdsadmin.rdsadmin_s3_tasks.upload_to_s3(
       p_bucket_name    =>  'stagestorage', 
       p_prefix         =>  '', 
       p_s3_prefix      =>  '', 
       p_directory_name =>  'DATA_PUMP_DIR') 
-   AS TASK_ID FROM DUAL;   
+   AS TASK_ID FROM DUAL; 
+</copy>   
 ```
 
 ![Pic16](images/Pic16.png)
@@ -107,7 +109,7 @@ The result would be a task id like this: ```1588173984661-23```
 To check the log for the task id, run the query:
 
 ```
-SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('BDUMP','dbtask-1588173984661-23.log')); 
+<copy>SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('BDUMP','dbtask-1588173984661-23.log'));<\copy>
 ```    
 \
 ![Pic17](images/Pic17.png)
