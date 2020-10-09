@@ -16,7 +16,7 @@ The main steps are
 
 Here are the details for each step:
 
-### 5.	Datapump export in AWS RDS
+### 1.	Datapump export in AWS RDS
 Connect using SQL Developer
 
 ![First Pic](images/Pic01.png)
@@ -86,7 +86,7 @@ When the job ends the state changes to NOT RUNNING.
 
 
 
-### 6.	Copy the dumpfile to AWS S3 Storage
+### 2.	Copy the dumpfile to AWS S3 Storage
 
 [Documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/oracle-s3-integration.html#oracle-s3-integration.preparing)
 
@@ -123,7 +123,7 @@ Click on the dump file.
 
 Note down the object URL because we are going to use it later.
 
-### 7.	In Autonomous Database create credentials to AWS S3 Storage
+### 3.	In Autonomous Database create credentials to AWS S3 Storage
 
 Connect with SQL Developer 
 
@@ -150,18 +150,19 @@ END;
 ```
 
 
-### 8.	Datapump Import in Autonomous database
+### 4.	Datapump Import in Autonomous database
 
 In the DBA tab select the ATP connection, expand Data Pump and right click on Import Jobs. Chose Data Pump Import Wizard.
 
 ![Pic21](images/Pic21.png)
 
 In the first step chose Schemas to import.
-In the **Credentials or Directories** section, choose the Credentials created above: **AWS_CRED_NAME**.
+In the **Credentials or Directories** section, choose the Credentials created above: **AWS\_CRED\_NAME**.
 
 ![Pic22](images/Pic22.png)
 
-In the **File Names or URI** section, enter the object URL noted down at the end of step 6.\
+In the **File Names or URI** section, enter the object URL noted down at the end of step 6.
+
 Click Next.
 
 ![Pic23](images/Pic23.png)
@@ -194,6 +195,8 @@ The job appears in the window with the EXECUTING state.
 When the Job is finished the state changes to NOT RUNNING
 
 ![Pic30](images/Pic30.png)
+
+### 5.	Test the import
 
 We can see the data was imported and run the same SQL statement from the beginning.
 ```
