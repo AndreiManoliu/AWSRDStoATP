@@ -22,8 +22,9 @@ Connect using SQL Developer
 ![First Pic](images/Pic01.png)
 
 Run a simple query statement to select a table in the DCA schema that we are going to migrate.
+
 ```
-Select * from dca.dca_sales_data;
+<copy>Select * from dca.dca_sales_data;<\copy>
 ```
 
 ![Pic02](images/Pic02.png)
@@ -111,14 +112,14 @@ To check the log for the task id, run the query:
 ```
 <copy>SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('BDUMP','dbtask-1588173984661-23.log'));<\copy>
 ```    
-\
+
 ![Pic17](images/Pic17.png)
-\
+
 [S3 security guidelines and documentation](https://docs.aws.amazon.com/AmazonS3/latest/dev/access-control-block-public-access.html)  
 When the upload is completed you can see the files in the bucket.
-\
+
 ![Pic18](images/Pic18.png)
-\
+
 Click on the dump file.
 
 ![Pic19](images/Pic19.png)
@@ -141,6 +142,7 @@ Get the AWS credentials like this:
 Run the following query to create the credentials to Amazon S3 Storage:
 
 ```
+<copy>
 BEGIN
   DBMS_CLOUD.CREATE_CREDENTIAL(
     credential_name => 'AWS_CRED_NAME',
@@ -149,6 +151,7 @@ BEGIN
   );
 END;
 /
+<\copy>
 ```
 
 
@@ -169,7 +172,7 @@ Click Next.
 
 ![Pic23](images/Pic23.png)
 
-Wait a bit until the schema appears in the list. Chose the schema name and move it to the right panel.\
+Wait a bit until the schema appears in the list. Chose the schema name and move it to the right panel.
 Click Next.
 
 ![Pic24](images/Pic24.png)
@@ -201,8 +204,9 @@ When the Job is finished the state changes to NOT RUNNING
 ### 5.	Test the import
 
 We can see the data was imported and run the same SQL statement from the beginning.
+
 ```
-select * from dca.dca_sales_data;
+<copy>select * from dca.dca_sales_data;<\copy>
 ```
 
 ![Pic31](images/Pic31.png)
