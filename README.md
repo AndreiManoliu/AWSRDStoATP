@@ -25,7 +25,7 @@ Run a simple query statement to select a table in the DCA schema that we are goi
 
 ```
 
-$ <copy>Select * from dca.dca_sales_data;
+<copy>Select * from dca.dca_sales_data;
 
 ```
 
@@ -96,7 +96,7 @@ When the job ends the state changes to NOT RUNNING.
 To copy the dumpfile from the internal DATA_PUMP_DIR to the S3 bucket, run the following SQL.
 
 ```
-$ <copy>
+<copy>
 SELECT rdsadmin.rdsadmin_s3_tasks.upload_to_s3(
       p_bucket_name    =>  'stagestorage', 
       p_prefix         =>  '', 
@@ -112,7 +112,7 @@ The result would be a task id like this: ```1588173984661-23```
 To check the log for the task id, run the query:
 
 ```
-$ <copy>SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('BDUMP','dbtask-1588173984661-23.log'));
+<copy>SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('BDUMP','dbtask-1588173984661-23.log'));
 ```    
 
 ![Pic17](images/Pic17.png)
@@ -144,7 +144,7 @@ Get the AWS credentials like this:
 Run the following query to create the credentials to Amazon S3 Storage:
 
 ```
-$ <copy>
+<copy>
 BEGIN
   DBMS_CLOUD.CREATE_CREDENTIAL(
     credential_name => 'AWS_CRED_NAME',
@@ -207,7 +207,7 @@ When the Job is finished the state changes to NOT RUNNING
 We can see the data was imported and run the same SQL statement from the beginning.
 
 ```
-$ <copy>select * from dca.dca_sales_data;
+<copy>select * from dca.dca_sales_data;
 ```
 
 ![Pic31](images/Pic31.png)
