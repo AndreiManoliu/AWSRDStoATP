@@ -113,7 +113,7 @@ To check the log for the task id, run the query:
 
 ```
 <copy>SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('BDUMP','dbtask-1588173984661-23.log'));
-```    
+```
 
 ![Pic17](images/Pic17.png)
 
